@@ -20,8 +20,7 @@ const portalSchema = new mongoose.Schema({
         enum:["full-time","part-time","intership","remote"],
     },
     position:Number,
- 
-
+    
 })
 
 const portal = mongoose.model("portal",portalSchema)
