@@ -1,9 +1,9 @@
-import express from "express"
+import express from "express";
 
-import portalController from "../controller/portalController.js"
+import portalController from "../controller/portalController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/add",portalController.addJob)
+router.post("/add", portalController.addJob);
 
-export default router
+export default router;
