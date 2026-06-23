@@ -37,6 +37,23 @@ const addJob = async (req, res, next) => {
   } catch (error) {
     next(new httpError(error.message));
   }
+
 };
 
-export default { addJob };
+const alljobs = async(req,res,next)=>{
+  try {
+    
+    const alljob = await portal.find({})
+
+    if(!alljob){
+      return next(new httpError('employ  can,t find ',400))
+    }
+    res.status(200).json({message:"employ information here",alljob})
+
+  } catch (error) {
+    next(new httpError(error.message))
+  }
+}
+
+
+export default { addJob , alljobs };
