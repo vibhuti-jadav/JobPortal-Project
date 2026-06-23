@@ -55,5 +55,21 @@ const alljobs = async(req,res,next)=>{
   }
 }
 
+const specifyJob = async(req,res,next)=>{
+  try {
+    const id =  req.params.id
 
-export default { addJob , alljobs };
+    const  existingJob =  await portal.findById(id)
+
+    if(!existingJob){
+      return next(new httpError("job is not found",400))
+    }
+
+    res.status(200).json({message:"job find successfully",existingJob})
+  } catch (error) {
+    next(new httpError(error.message))
+  }
+}
+
+
+export default { addJob , alljobs ,specifyJob };
