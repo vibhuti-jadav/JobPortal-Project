@@ -71,5 +71,55 @@ const specifyJob = async(req,res,next)=>{
   }
 }
 
+const updateJob = async(req,res,next)=>{
+  try {
+    const id = req.params.id
 
-export default { addJob , alljobs ,specifyJob };
+    const existingJob = await portal.findById(id)
+
+    if(!existingJob){
+      return next(new httpError("job not found",400))
+    }
+
+    const updates = Object.keys(req.body)
+
+    const allowfield = ["title","description","requirments","salary","experienceLevel","location","jobtype","position"]
+ 
+    const isValidUpdate = updates.every((field)=>allowfield.includes(field))
+
+    if(!isValidUpdate){
+      return next(new httpError("only allowed field can be updated",400))
+    }
+
+    updates.forEach((update)=>{
+      existingJob[update] = req.body[update]
+    })
+
+    await existingJob.save()
+
+    res.status(200).json({message:"employee information udated successfullyy",existingJob})
+
+  } catch (error) {
+    next(new httpError(error.message))
+  }
+}
+
+const deleteJob = async(req,res,next)=>{
+  try {
+    const id = req.params.id
+
+    const  existingJob = await portal.findByIdAndDelete(id) 
+
+    if(!existingJob){
+      return next(new httpError("job not found",400))
+    }
+
+    res.status(200).json({message:"job delete successfully"})
+  } catch (error) {
+   next(new httpError(error.message)) 
+  }
+}
+
+
+
+export default { addJob , alljobs ,specifyJob , updateJob,deleteJob };
