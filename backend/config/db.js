@@ -1,12 +1,14 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const connectDb = async()=>{
-    try{
-        const connect = await mongoose.connect("mongodb://127.0.0.1:27017/jobportal")
-        return connect
-    }catch(error){
-        console.log(error.message)
-    }
-}
+const connectDb = async () => {
+  try {
+    const connect = await mongoose.connect(
+      "mongodb://127.0.0.1:27017/jobportal",
+    );
+    return connect;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
-export default connectDb
+export default connectDb;

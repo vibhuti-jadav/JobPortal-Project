@@ -37,89 +37,97 @@ const addJob = async (req, res, next) => {
   } catch (error) {
     next(new httpError(error.message));
   }
-
 };
 
-const alljobs = async(req,res,next)=>{
+const alljobs = async (req, res, next) => {
   try {
-    
-    const alljob = await portal.find({})
+    const alljob = await portal.find({});
 
-    if(!alljob){
-      return next(new httpError('employ  can,t find ',400))
+    if (!alljob) {
+      return next(new httpError("employ  can,t find ", 400));
     }
-    res.status(200).json({message:"employ information here",alljob})
-
+    res.status(200).json({ message: "employ information here", alljob });
   } catch (error) {
-    next(new httpError(error.message))
+    next(new httpError(error.message));
   }
-}
+};
 
-const specifyJob = async(req,res,next)=>{
+const specifyJob = async (req, res, next) => {
   try {
-    const id =  req.params.id
+    const id = req.params.id;
 
-    const  existingJob =  await portal.findById(id)
+    const existingJob = await portal.findById(id);
 
-    if(!existingJob){
-      return next(new httpError("job is not found",400))
+    if (!existingJob) {
+      return next(new httpError("job is not found", 400));
     }
 
-    res.status(200).json({message:"job find successfully",existingJob})
+    res.status(200).json({ message: "job find successfully", existingJob });
   } catch (error) {
-    next(new httpError(error.message))
+    next(new httpError(error.message));
   }
-}
+};
 
-const updateJob = async(req,res,next)=>{
+const updateJob = async (req, res, next) => {
   try {
-    const id = req.params.id
+    const id = req.params.id;
 
-    const existingJob = await portal.findById(id)
+    const existingJob = await portal.findById(id);
 
-    if(!existingJob){
-      return next(new httpError("job not found",400))
+    if (!existingJob) {
+      return next(new httpError("job not found", 400));
     }
 
-    const updates = Object.keys(req.body)
+    const updates = Object.keys(req.body);
 
-    const allowfield = ["title","description","requirments","salary","experienceLevel","location","jobtype","position"]
- 
-    const isValidUpdate = updates.every((field)=>allowfield.includes(field))
+    const allowfield = [
+      "title",
+      "description",
+      "requirments",
+      "salary",
+      "experienceLevel",
+      "location",
+      "jobtype",
+      "position",
+    ];
 
-    if(!isValidUpdate){
-      return next(new httpError("only allowed field can be updated",400))
+    const isValidUpdate = updates.every((field) => allowfield.includes(field));
+
+    if (!isValidUpdate) {
+      return next(new httpError("only allowed field can be updated", 400));
     }
 
-    updates.forEach((update)=>{
-      existingJob[update] = req.body[update]
-    })
+    updates.forEach((update) => {
+      existingJob[update] = req.body[update];
+    });
 
-    await existingJob.save()
+    await existingJob.save();
 
-    res.status(200).json({message:"employee information udated successfullyy",existingJob})
-
+    res
+      .status(200)
+      .json({
+        message: "employee information udated successfullyy",
+        existingJob,
+      });
   } catch (error) {
-    next(new httpError(error.message))
+    next(new httpError(error.message));
   }
-}
+};
 
-const deleteJob = async(req,res,next)=>{
+const deleteJob = async (req, res, next) => {
   try {
-    const id = req.params.id
+    const id = req.params.id;
 
-    const  existingJob = await portal.findByIdAndDelete(id) 
+    const existingJob = await portal.findByIdAndDelete(id);
 
-    if(!existingJob){
-      return next(new httpError("job not found",400))
+    if (!existingJob) {
+      return next(new httpError("job not found", 400));
     }
 
-    res.status(200).json({message:"job delete successfully"})
+    res.status(200).json({ message: "job delete successfully" });
   } catch (error) {
-   next(new httpError(error.message)) 
+    next(new httpError(error.message));
   }
-}
+};
 
-
-
-export default { addJob , alljobs ,specifyJob , updateJob,deleteJob };
+export default { addJob, alljobs, specifyJob, updateJob, deleteJob };
