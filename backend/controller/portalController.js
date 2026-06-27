@@ -130,26 +130,6 @@ const deleteJob = async (req, res, next) => {
   }
 };
 
-const login = async(req,res,next)=>{
-
-    try {
-            const {name , password} = req.body;
-
-            const employee = await employ.findByCredential(name , password)
-
-            if(!employee){
-                return next(new httpError("cant loign",400))
-            }
-
-            res.status(200).json({message:"employee login successfully",employee})
 
 
-    } catch (error) {
-
-        next(new httpError(error.message))
-        
-    }
-
-}
-
-export default { addJob, alljobs, specifyJob, updateJob, deleteJob , login };
+export default { addJob, alljobs, specifyJob, updateJob, deleteJob  };
