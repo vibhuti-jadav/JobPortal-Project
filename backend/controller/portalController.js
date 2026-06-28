@@ -130,6 +130,4 @@ const deleteJob = async (req, res, next) => {
   }
 };
 
-
-
 export default { addJob, alljobs, specifyJob, updateJob, deleteJob  };
